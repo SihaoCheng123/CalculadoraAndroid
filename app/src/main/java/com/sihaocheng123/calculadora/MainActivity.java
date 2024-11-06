@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,10 +12,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.ArrayList;
-
+import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
+
+    private TextView pantalla, resultadoPantalla;
+    private double firstValue, secondValue, resultValue;
+    private char operacionActual;
+    private DecimalFormat decimalFormat;
+    private Button boton0, boton1, boton2, boton3, boton4, boton5, boton6, boton7, boton8, boton9;
+    private Button botonMas, botonMenos, botonPor, botonEntre, botonPorcentaje, botonCalcular,
+            botonBorrar, botonAC, botonComa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,103 +35,178 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        Button boton1 = findViewById(R.id.button1);
-        Button boton2 = findViewById(R.id.button2);
-        Button boton3 = findViewById(R.id.button3);
-        Button boton4 = findViewById(R.id.button4);
-        Button boton5 = findViewById(R.id.button5);
-        Button boton6 = findViewById(R.id.button6);
-        Button boton7 = findViewById(R.id.button7);
-        Button boton8 = findViewById(R.id.button8);
-        Button boton9 = findViewById(R.id.button9);
-        Button boton0 = findViewById(R.id.button0);
-        Button botonMas = findViewById(R.id.buttonAdd);
-        Button botonMenos = findViewById(R.id.buttonMenos);
-        Button botonPor = findViewById(R.id.buttonX);
-        Button botonEntre = findViewById(R.id.buttonDividir);
-        Button botonPorcentaje = findViewById(R.id.buttonPorcentaje);
-        Button botonCalcular = findViewById(R.id.buttonCalcular);
-        Button botonBorrar = findViewById(R.id.buttonDelete);
-        Button botonAC = findViewById(R.id.buttonAC);
-        Button botonE = findViewById(R.id.buttonE);
-        TextView pantalla = findViewById(R.id.pantalla);
+        boton1 = findViewById(R.id.button1);
+        boton2 = findViewById(R.id.button2);
+        boton3 = findViewById(R.id.button3);
+        boton4 = findViewById(R.id.button4);
+        boton5 = findViewById(R.id.button5);
+        boton6 = findViewById(R.id.button6);
+        boton7 = findViewById(R.id.button7);
+        boton8 = findViewById(R.id.button8);
+        boton9 = findViewById(R.id.button9);
+        boton0 = findViewById(R.id.button0);
+        botonMas = findViewById(R.id.buttonAdd);
+        botonMenos = findViewById(R.id.buttonMenos);
+        botonPor = findViewById(R.id.buttonX);
+        botonEntre = findViewById(R.id.buttonDividir);
+        botonPorcentaje = findViewById(R.id.buttonPorcentaje);
+        botonCalcular = findViewById(R.id.buttonCalcular);
+        botonBorrar = findViewById(R.id.buttonDelete);
+        botonAC = findViewById(R.id.buttonAC);
+        pantalla = findViewById(R.id.pantalla);
+        botonComa = findViewById(R.id.buttonComa);
         pantalla.setText("");
-        TextView resultadoPantalla = findViewById(R.id.resultado);
+        resultadoPantalla = findViewById(R.id.resultado);
 
+        firstValue = Double.NaN;
+        decimalFormat = new DecimalFormat("#.########");
 
-        ArrayList<Button> buttons = new ArrayList<>();
-        buttons.add(boton0);
-        buttons.add(boton1);
-        buttons.add(boton2);
-        buttons.add(boton3);
-        buttons.add(boton4);
-        buttons.add(boton5);
-        buttons.add(boton6);
-        buttons.add(boton7);
-        buttons.add(boton8);
-        buttons.add(boton9);
-
-        buttons.add(botonMas);
-        buttons.add(botonMenos);
-        buttons.add(botonPorcentaje);
-        buttons.add(botonPor);
-        buttons.add(botonEntre);
-        buttons.add(botonBorrar);
-        buttons.add(botonAC);
-        buttons.add(botonE);
-
-        ArrayList<Integer> listaNums = new ArrayList<>();
-        String[] operador = new String[1];
-
-
-        for (Button btn : buttons) {
-            btn.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    if (isNumeric(btn.getText().toString())) {
-                        String textoPantalla = pantalla.getText().toString();
-                        textoPantalla += btn.getText();
-                        pantalla.setText(textoPantalla);
-                    }else{
-                        String textoPantalla = pantalla.getText().toString();
-                        textoPantalla += btn.getText();
-                        pantalla.setText(textoPantalla);
-                        operador[0] = btn.getText().toString();
-                    }
-
-                }
-            });
-        }
-
-        botonCalcular.setOnClickListener(view -> {
-            int resultadoOperacion = 0;
-            switch (operador[0]) {
-                case "+":
-                    resultadoOperacion = listaNums.get(0) + listaNums.get(1);
-                    break;
-                case "-":
-                    resultadoOperacion = listaNums.get(0) - listaNums.get(1);
-                    break;
-                case "X":
-                    resultadoOperacion = listaNums.get(0) * listaNums.get(1);
-                    break;
-                case "/":
-                    resultadoOperacion = listaNums.get(0) / listaNums.get(1);
-                    break;
+        boton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pantalla.setText(pantalla.getText() + "1");
             }
-            resultadoPantalla.setText(resultadoOperacion);
         });
 
-}
-        public static boolean isNumeric (String cadena){
-            boolean resultado;
-            try {
-                Integer.parseInt(cadena);
-                resultado = true;
-            } catch (NumberFormatException excepcion) {
-                resultado = false;
+        boton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pantalla.setText(pantalla.getText() + "1");
             }
-            return resultado;
-        }
+        });
+
+        boton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pantalla.setText(pantalla.getText() + "2");
+            }
+        });
+        boton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pantalla.setText(pantalla.getText() + "3");
+            }
+        });
+        boton4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pantalla.setText(pantalla.getText() + "4");
+            }
+        });
+        boton5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pantalla.setText(pantalla.getText() + "5");
+            }
+        });
+        boton6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pantalla.setText(pantalla.getText() + "6");
+            }
+        });
+        boton7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pantalla.setText(pantalla.getText() + "7");
+            }
+        });
+        boton8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pantalla.setText(pantalla.getText() + "8");
+            }
+        });
+        boton9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pantalla.setText(pantalla.getText() + "9");
+            }
+        });
+        boton0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pantalla.setText(pantalla.getText() + "0");
+            }
+        });
+        botonComa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pantalla.setText(pantalla.getText() + ",");
+            }
+        });
+
+        botonMas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                operacionActual = botonMas.getText().toString().charAt(0);
+                allCalculations();
+                pantalla.setText(decimalFormat.format(firstValue)+ "+");
+                resultadoPantalla.setText("");
+            }
+        });
+        botonMenos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                operacionActual = botonMenos.getText().toString().charAt(0);
+                allCalculations();
+                pantalla.setText(decimalFormat.format(firstValue)+ "-");
+                resultadoPantalla.setText("");
+            }
+        });
+        botonPor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                operacionActual = botonPor.getText().toString().charAt(0);
+                allCalculations();
+                pantalla.setText(decimalFormat.format(firstValue)+ "*");
+                resultadoPantalla.setText("");
+            }
+        });
+        botonEntre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                operacionActual = botonEntre.getText().toString().charAt(0);
+                allCalculations();
+                pantalla.setText(decimalFormat.format(firstValue)+ "/");
+                resultadoPantalla.setText("");
+            }
+        });
+
+        botonCalcular.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                allCalculations();
+                resultadoPantalla.setText(decimalFormat.format(resultValue));
+                firstValue = Double.NaN;
+                operacionActual= 'a';
+            }
+        });
 
 
     }
+
+    public void allCalculations() {
+        if (!Double.isNaN(firstValue)) {
+            secondValue = Double.parseDouble((pantalla.getText().toString()));
+
+            if (operacionActual == botonMas.getText().toString().charAt(0)) {
+                resultValue = this.firstValue + secondValue;
+            } else if (operacionActual == botonMenos.getText().toString().charAt(0)) {
+                resultValue = this.firstValue - secondValue;
+            } else if (operacionActual == botonPor.getText().toString().charAt(0)) {
+                resultValue = this.firstValue * secondValue;
+            } else if (operacionActual == botonEntre.getText().toString().charAt(0)) {
+                resultValue = this.firstValue / secondValue;
+            } else if (operacionActual == botonPorcentaje.getText().toString().charAt(0)) {
+                resultValue = this.firstValue % secondValue;
+            }
+        }else{
+            try{
+                firstValue = Double.parseDouble(pantalla.getText().toString());
+            }catch (Exception e){
+                Toast toast = Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT);
+            }
+        }
+    }
+}
