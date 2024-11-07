@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,17 +11,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.text.DecimalFormat;
+import java.util.HashMap;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView pantalla, resultadoPantalla;
-    private double firstValue, secondValue, resultValue;
-    private char operacionActual;
-    private DecimalFormat decimalFormat;
-    private Button boton0, boton1, boton2, boton3, boton4, boton5, boton6, boton7, boton8, boton9;
-    private Button botonMas, botonMenos, botonPor, botonEntre, botonPorcentaje, botonCalcular,
-            botonBorrar, botonAC, botonComa;
+    private HashMap<Button,String> listaValores= new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,178 +29,93 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        boton1 = findViewById(R.id.button1);
-        boton2 = findViewById(R.id.button2);
-        boton3 = findViewById(R.id.button3);
-        boton4 = findViewById(R.id.button4);
-        boton5 = findViewById(R.id.button5);
-        boton6 = findViewById(R.id.button6);
-        boton7 = findViewById(R.id.button7);
-        boton8 = findViewById(R.id.button8);
-        boton9 = findViewById(R.id.button9);
-        boton0 = findViewById(R.id.button0);
-        botonMas = findViewById(R.id.buttonAdd);
-        botonMenos = findViewById(R.id.buttonMenos);
-        botonPor = findViewById(R.id.buttonX);
-        botonEntre = findViewById(R.id.buttonDividir);
-        botonPorcentaje = findViewById(R.id.buttonPorcentaje);
-        botonCalcular = findViewById(R.id.buttonCalcular);
-        botonBorrar = findViewById(R.id.buttonDelete);
-        botonAC = findViewById(R.id.buttonAC);
-        pantalla = findViewById(R.id.pantalla);
-        botonComa = findViewById(R.id.buttonComa);
+        Button boton1 = findViewById(R.id.button1);
+        Button boton2 = findViewById(R.id.button2);
+        Button boton3 = findViewById(R.id.button3);
+        Button boton4 = findViewById(R.id.button4);
+        Button boton5 = findViewById(R.id.button5);
+        Button boton6 = findViewById(R.id.button6);
+        Button boton7 = findViewById(R.id.button7);
+        Button boton8 = findViewById(R.id.button8);
+        Button boton9 = findViewById(R.id.button9);
+        Button boton0 = findViewById(R.id.button0);
+        Button botonMas = findViewById(R.id.buttonAdd);
+        Button botonMenos = findViewById(R.id.buttonMenos);
+        Button botonPor = findViewById(R.id.buttonX);
+        Button botonEntre = findViewById(R.id.buttonEntre);
+        Button botonPorcentaje = findViewById(R.id.buttonPorcentaje);
+        Button botonCalcular = findViewById(R.id.buttonIgual);
+        Button botonBorrar = findViewById(R.id.buttonDelete);
+        Button botonAC = findViewById(R.id.buttonAC);
+        TextView pantalla = findViewById(R.id.pantalla);
+        Button botonComa = findViewById(R.id.buttonComa);
         pantalla.setText("");
-        resultadoPantalla = findViewById(R.id.resultado);
+        TextView resultadoPantalla = findViewById(R.id.resultado);
 
-        firstValue = Double.NaN;
-        decimalFormat = new DecimalFormat("#.########");
+        this.listaValores.put(boton0, boton0.getText().toString());
+        this.listaValores.put(boton1, boton1.getText().toString());
+        this.listaValores.put(boton2, boton2.getText().toString());
+        this.listaValores.put(boton3, boton3.getText().toString());
+        this.listaValores.put(boton4, boton4.getText().toString());
+        this.listaValores.put(boton5, boton5.getText().toString());
+        this.listaValores.put(boton6, boton6.getText().toString());
+        this.listaValores.put(boton7, boton7.getText().toString());
+        this.listaValores.put(boton8, boton8.getText().toString());
+        this.listaValores.put(boton9, boton9.getText().toString());
+        this.listaValores.put(botonEntre, botonEntre.getText().toString());
+        this.listaValores.put(botonPorcentaje, botonPorcentaje.getText().toString());
+        this.listaValores.put(botonMas, botonMas.getText().toString());
+        this.listaValores.put(botonMenos, botonMenos.getText().toString());
+        this.listaValores.put(botonPor, botonPor.getText().toString());
+        this.listaValores.put(botonComa, botonComa.getText().toString());
+        this.listaValores.put(botonCalcular, botonComa.getText().toString());
+        this.listaValores.put(botonBorrar, botonBorrar.getText().toString());
+        this.listaValores.put(botonAC, botonAC.getText().toString());
 
-        boton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pantalla.setText(pantalla.getText() + "1");
+        StringBuilder stringBuilder = new StringBuilder();
+        
+        for(Button key: listaValores.keySet()){
+            if(key.getText().equals("AC")){
+                key.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        pantalla.setText("");
+                        stringBuilder.delete(0, -1);
+                    }
+                });
+            }else if(key.getText().equals("C")){
+                key.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        stringBuilder.deleteCharAt(-1);
+                        pantalla.setText(stringBuilder);
+                    }
+                });
+            }else{
+                //esto funciona, lo de arriba no
+                key.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String textoPulsado = key.getText().toString();
+                        stringBuilder.append(textoPulsado);
+                        pantalla.setText(stringBuilder);
+                    }
+                });
             }
-        });
 
-        boton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pantalla.setText(pantalla.getText() + "1");
-            }
-        });
-
-        boton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pantalla.setText(pantalla.getText() + "2");
-            }
-        });
-        boton3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pantalla.setText(pantalla.getText() + "3");
-            }
-        });
-        boton4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pantalla.setText(pantalla.getText() + "4");
-            }
-        });
-        boton5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pantalla.setText(pantalla.getText() + "5");
-            }
-        });
-        boton6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pantalla.setText(pantalla.getText() + "6");
-            }
-        });
-        boton7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pantalla.setText(pantalla.getText() + "7");
-            }
-        });
-        boton8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pantalla.setText(pantalla.getText() + "8");
-            }
-        });
-        boton9.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pantalla.setText(pantalla.getText() + "9");
-            }
-        });
-        boton0.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pantalla.setText(pantalla.getText() + "0");
-            }
-        });
-        botonComa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pantalla.setText(pantalla.getText() + ",");
-            }
-        });
-
-        botonMas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                operacionActual = botonMas.getText().toString().charAt(0);
-                allCalculations();
-                pantalla.setText(decimalFormat.format(firstValue)+ "+");
-                resultadoPantalla.setText("");
-            }
-        });
-        botonMenos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                operacionActual = botonMenos.getText().toString().charAt(0);
-                allCalculations();
-                pantalla.setText(decimalFormat.format(firstValue)+ "-");
-                resultadoPantalla.setText("");
-            }
-        });
-        botonPor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                operacionActual = botonPor.getText().toString().charAt(0);
-                allCalculations();
-                pantalla.setText(decimalFormat.format(firstValue)+ "*");
-                resultadoPantalla.setText("");
-            }
-        });
-        botonEntre.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                operacionActual = botonEntre.getText().toString().charAt(0);
-                allCalculations();
-                pantalla.setText(decimalFormat.format(firstValue)+ "/");
-                resultadoPantalla.setText("");
-            }
-        });
-
-        botonCalcular.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                allCalculations();
-                resultadoPantalla.setText(decimalFormat.format(resultValue));
-                firstValue = Double.NaN;
-                operacionActual= 'a';
-            }
-        });
-
-
-    }
-
-    public void allCalculations() {
-        if (!Double.isNaN(firstValue)) {
-            secondValue = Double.parseDouble((pantalla.getText().toString()));
-
-            if (operacionActual == botonMas.getText().toString().charAt(0)) {
-                resultValue = this.firstValue + secondValue;
-            } else if (operacionActual == botonMenos.getText().toString().charAt(0)) {
-                resultValue = this.firstValue - secondValue;
-            } else if (operacionActual == botonPor.getText().toString().charAt(0)) {
-                resultValue = this.firstValue * secondValue;
-            } else if (operacionActual == botonEntre.getText().toString().charAt(0)) {
-                resultValue = this.firstValue / secondValue;
-            } else if (operacionActual == botonPorcentaje.getText().toString().charAt(0)) {
-                resultValue = this.firstValue % secondValue;
-            }
-        }else{
-            try{
-                firstValue = Double.parseDouble(pantalla.getText().toString());
-            }catch (Exception e){
-                Toast toast = Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT);
-            }
         }
+
+//meter dentro de lo de arriba
+//        botonAC.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                pantalla.setText("");
+//                stringBuilder.delete(0,-1);
+//            }
+//        });
+
+        //split string in 2 with /, *, + or -
     }
+
 }
+
