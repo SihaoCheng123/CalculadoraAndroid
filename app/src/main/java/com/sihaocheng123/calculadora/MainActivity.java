@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 
@@ -68,30 +70,33 @@ public class MainActivity extends AppCompatActivity {
         this.listaValores.put(botonMenos, botonMenos.getText().toString());
         this.listaValores.put(botonPor, botonPor.getText().toString());
         this.listaValores.put(botonComa, botonComa.getText().toString());
-        this.listaValores.put(botonCalcular, botonComa.getText().toString());
+//        this.listaValores.put(botonCalcular, botonCalcular.getText().toString());
         this.listaValores.put(botonBorrar, botonBorrar.getText().toString());
         this.listaValores.put(botonAC, botonAC.getText().toString());
 
         StringBuilder stringBuilder = new StringBuilder();
         
         for(Button key: listaValores.keySet()){
+            //Delete all content
             if(key.getText().equals("AC")){
                 key.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        pantalla.setText("");
-                        stringBuilder.delete(0, -1);
+                        stringBuilder.delete(0, stringBuilder.length());
+                        pantalla.setText(stringBuilder);
+                        resultadoPantalla.setText("");
                     }
                 });
+                //Delete last char
             }else if(key.getText().equals("C")){
                 key.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        stringBuilder.deleteCharAt(-1);
+                        stringBuilder.deleteCharAt(stringBuilder.length()-1);
                         pantalla.setText(stringBuilder);
                     }
                 });
-            }else{
+            } else{
                 //esto funciona, lo de arriba no
                 key.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -102,20 +107,57 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             }
-
         }
 
-//meter dentro de lo de arriba
-//        botonAC.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                pantalla.setText("");
-//                stringBuilder.delete(0,-1);
-//            }
-//        });
+        botonCalcular.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                String operaciones [] = {"+", "-", "*", "/", "%"};
+                String [] listaNumsString = stringBuilder.toString().split("\\D");
+                String [] listaOperaciones = stringBuilder.toString().split("\\d");
 
-        //split string in 2 with /, *, + or -
+                double [] listaNums =  Arrays.stream(listaNumsString).mapToDouble(Double::parseDouble).toArray();
+                double valorResultado = 0;
+                try{
+
+                    for (int i = 0; i < listaNums.length+1; i++) {
+                        valorResultado = calculations(listaOperaciones[i+1], listaNums[i], listaNums[i+1]);
+                        listaNums[i+1] = valorResultado;
+                        resultadoPantalla.setText(String.valueOf(valorResultado));
+                    }
+                }catch (IndexOutOfBoundsException | ArithmeticException e){
+                    Toast toast =Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT);
+                }catch (NumberFormatException e){
+                    Toast toast =Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT);
+                }
+            }
+        });
     }
 
+    public double calculations(String operacion, double num1, double num2){
+        double resultado = 0;
+        switch (operacion){
+            case "+":
+                resultado = num1 + num2;
+                break;
+            case "-":
+                resultado = num1 - num2;
+                break;
+            case "*":
+                resultado = num1 * num2;
+                break;
+            case "/":
+                resultado = num1 / num2;
+                break;
+            case "%":
+                resultado = num1 % num2;
+                break;
+        }
+        return resultado;
+    }
+
+    public void prioridadOperaciones(){
+
+    }
 }
 
