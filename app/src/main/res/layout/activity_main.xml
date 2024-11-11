@@ -11,7 +11,7 @@
         android:id="@+id/pantalla"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:textSize="50sp"
+        android:textSize="58sp"
         android:textAlignment="textEnd"
         android:text="CALCULADORA"
         android:layout_gravity="end|bottom"
@@ -19,12 +19,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:gravity="bottom"
+        android:layout_marginTop="10dp"
         tools:ignore="RtlCompat" />
 <TextView
     android:id="@+id/resultado"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:textSize="30sp"
+    android:layout_height="70dp"
+    android:textSize="40sp"
     android:textAlignment="textEnd"
     app:layout_constraintTop_toBottomOf="@id/pantalla"
     app:layout_constraintBottom_toTopOf="@id/linearLayoutCalculatorBotton"
@@ -39,6 +40,7 @@
         android:orientation="vertical"
         tools:ignore="MissingConstraints"
         app:layout_constraintTop_toBottomOf="@+id/resultado"
+        app:layout_constraintBottom_toBottomOf="parent"
         >
 
         <LinearLayout
@@ -52,34 +54,38 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:textSize="17sp"
                     android:id="@+id/buttonAC"
                     style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="85dp"
                     android:layout_weight="1"
                     android:text="AC" />
 
                 <Button
+                    android:textSize="17sp"
                     android:id="@+id/buttonDelete"
                     style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="85dp"
                     android:layout_weight="1"
                     android:text="C" />
 
                 <Button
+                    android:textSize="17sp"
                     android:id="@+id/buttonPorcentaje"
                     style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="85dp"
                     android:layout_weight="1"
                     android:text="%" />
 
                 <Button
+                    android:textSize="17sp"
                     android:id="@+id/buttonEntre"
                     style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="85dp"
                     android:layout_weight="1"
                     android:text="/" />
 
@@ -91,34 +97,38 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:textSize="17sp"
                     android:id="@+id/button1"
                     style="@style/Widget.Material3.Button.IconButton.Filled"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="85dp"
                     android:layout_weight="1"
                     android:text="1" />
 
                 <Button
+                    android:textSize="17sp"
                     android:id="@+id/button2"
                     style="@style/Widget.Material3.Button.IconButton.Filled"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="85dp"
                     android:layout_weight="1"
                     android:text="2" />
 
                 <Button
+                    android:textSize="17sp"
                     android:id="@+id/button3"
                     style="@style/Widget.Material3.Button.IconButton.Filled"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="85dp"
                     android:layout_weight="1"
                     android:text="3" />
 
                 <Button
+                    android:textSize="17sp"
                     android:id="@+id/buttonX"
                     style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="85dp"
                     android:layout_weight="1"
                     android:text="*"
                     android:onClick="calcular"/>
@@ -130,34 +140,38 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:textSize="17sp"
                     android:id="@+id/button4"
                     style="@style/Widget.Material3.Button.IconButton.Filled"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="85dp"
                     android:layout_weight="1"
                     android:text="4" />
 
                 <Button
+                    android:textSize="17sp"
                     android:id="@+id/button5"
                     style="@style/Widget.Material3.Button.IconButton.Filled"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="85dp"
                     android:layout_weight="1"
                     android:text="5" />
 
                 <Button
+                    android:textSize="17sp"
                     android:id="@+id/button6"
                     style="@style/Widget.Material3.Button.IconButton.Filled"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="85dp"
                     android:layout_weight="1"
                     android:text="6" />
 
                 <Button
+                    android:textSize="17sp"
                     android:id="@+id/buttonMenos"
                     style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="85dp"
                     android:layout_weight="1"
                     android:text="-"
                     android:onClick="calcular"/>
@@ -169,34 +183,38 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:textSize="17sp"
                     android:id="@+id/button7"
                     style="@style/Widget.Material3.Button.IconButton.Filled"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="85dp"
                     android:layout_weight="1"
                     android:text="7" />
 
                 <Button
+                    android:textSize="17sp"
                     android:id="@+id/button8"
                     style="@style/Widget.Material3.Button.IconButton.Filled"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="85dp"
                     android:layout_weight="1"
                     android:text="8" />
 
                 <Button
+                    android:textSize="17sp"
                     android:id="@+id/button9"
                     style="@style/Widget.Material3.Button.IconButton.Filled"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="85dp"
                     android:layout_weight="1"
                     android:text="9" />
 
                 <Button
+                    android:textSize="17sp"
                     android:id="@+id/buttonAdd"
                     style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="85dp"
                     android:layout_weight="1"
                     android:text="+"
                     android:onClick="calcular"/>
@@ -208,34 +226,38 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:textSize="17sp"
                     android:id="@+id/buttonE"
                     style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="85dp"
                     android:layout_weight="1"
                     android:text="e" />
 
                 <Button
+                    android:textSize="17sp"
                     android:id="@+id/button0"
                     style="@style/Widget.Material3.Button.IconButton.Filled"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="85dp"
                     android:layout_weight="1"
                     android:text="0" />
 
                 <Button
+                    android:textSize="17sp"
                     android:id="@+id/buttonComa"
                     style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="85dp"
                     android:layout_weight="1"
                     android:text="." />
 
                 <Button
+                    android:textSize="17sp"
                     android:id="@+id/buttonIgual"
                     style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="85dp"
                     android:layout_weight="1"
                     android:text="="
                     />
