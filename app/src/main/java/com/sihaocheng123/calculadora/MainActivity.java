@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,8 +11,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.StringTokenizer;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         this.listaValores.put(botonBorrar, botonBorrar.getText().toString());
         this.listaValores.put(botonAC, botonAC.getText().toString());
 
+        char punto = '.';
         StringBuilder stringBuilder = new StringBuilder();
         
         for(Button key: listaValores.keySet()){
@@ -96,6 +97,40 @@ public class MainActivity extends AppCompatActivity {
                         pantalla.setText(stringBuilder);
                     }
                 });
+            } else if (key.getText().equals(".")) {
+                key.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //no deja poner dos comas seguidas
+                        if(stringBuilder.charAt(stringBuilder.length() -1)== '.'){
+                            stringBuilder.deleteCharAt(stringBuilder.length()-1);
+                            stringBuilder.append(key.getText().toString());
+                        }else {
+                            stringBuilder.append(key.getText().toString());
+                        }
+                        pantalla.setText(stringBuilder);
+                    }
+                });
+                //No deja poner dos operadores seguidos
+            } else if (key.getText().equals("+") || key.getText().equals("-") ||key.getText().equals("*") ||
+                    key.getText().equals("/") ||key.getText().equals("%")) {
+                key.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //no deja poner dos comas seguidas
+                        if(stringBuilder.charAt(stringBuilder.length() -1)== '+' ||
+                                stringBuilder.charAt(stringBuilder.length() -1)== '-' ||
+                                stringBuilder.charAt(stringBuilder.length() -1)== '*' ||
+                                stringBuilder.charAt(stringBuilder.length() -1)== '/' ||
+                                stringBuilder.charAt(stringBuilder.length() -1)== '%'){
+                            stringBuilder.deleteCharAt(stringBuilder.length()-1);
+                            stringBuilder.append(key.getText().toString());
+                        }else {
+                            stringBuilder.append(key.getText().toString());
+                        }
+                        pantalla.setText(stringBuilder);
+                    }
+                });
             } else{
                 //esto funciona, lo de arriba no
                 key.setOnClickListener(new View.OnClickListener() {
@@ -113,22 +148,53 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                String operaciones [] = {"+", "-", "*", "/", "%"};
-                String [] listaNumsString = stringBuilder.toString().split("\\D");
-                String [] listaOperaciones = stringBuilder.toString().split("\\d");
+//                String [] listaNumsString = stringBuilder.toString().split("\\D");
+//                String [] listaOperaciones = stringBuilder.toString().split("\\d");
+//
+//                double [] listaNums =  Arrays.stream(listaNumsString).mapToDouble(Double::parseDouble).toArray();
+//                double valorResultado = 0;
+//                try{
+//
+//                    for (int i = 0; i < listaNums.length+1; i++) {
+//                        valorResultado = calculations(listaOperaciones[i+1], listaNums[i], listaNums[i+1]);
+//                        listaNums[i+1] = valorResultado;
+//                        resultadoPantalla.setText(String.valueOf(valorResultado));
+//                    }
+//                }catch (IndexOutOfBoundsException | ArithmeticException e){
+//                    Toast toast =Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT);
+//                }catch (NumberFormatException e){
+//                    Toast toast =Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT);
+//                }
+                ArrayList<Double> listaNums = new ArrayList<>();
+                ArrayList<String> listaOperadores = new ArrayList<>();
+                StringTokenizer tokenizerNum = new StringTokenizer(stringBuilder.toString(), "+-*/%");
+                while (tokenizerNum.hasMoreTokens()){
+                    listaNums.add(Double.valueOf(tokenizerNum.nextToken()));
+                }
+                StringTokenizer tokenizerOp = new StringTokenizer(stringBuilder.toString(), "1234567890.");
+                while (tokenizerOp.hasMoreTokens()){
+                    listaOperadores.add(tokenizerOp.nextToken());
+                }
+                try {
+                    double valorResultado = 0;
+                    double valorResultado2;
 
-                double [] listaNums =  Arrays.stream(listaNumsString).mapToDouble(Double::parseDouble).toArray();
-                double valorResultado = 0;
-                try{
-
-                    for (int i = 0; i < listaNums.length+1; i++) {
-                        valorResultado = calculations(listaOperaciones[i+1], listaNums[i], listaNums[i+1]);
-                        listaNums[i+1] = valorResultado;
-                        resultadoPantalla.setText(String.valueOf(valorResultado));
+                    for (int i = 0; i < listaOperadores.size(); i++) {
+                        if(listaOperadores.get(i).equals("*") || listaOperadores.get(i).equals("/") ||listaOperadores.get(i).equals("%")){
+                            valorResultado2 = calculations(listaOperadores.get(i), listaNums.get(i), listaNums.get(i+1));
+                            listaNums.set(i+1,valorResultado2);
+                            listaNums.remove(i);
+                            listaOperadores.remove(i);
+                        }
                     }
-                }catch (IndexOutOfBoundsException | ArithmeticException e){
-                    Toast toast =Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT);
-                }catch (NumberFormatException e){
-                    Toast toast =Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT);
+                    for(int i = 0; i < listaOperadores.size(); i++){
+                        valorResultado = calculations(listaOperadores.get(i), listaNums.get(i), listaNums.get(i+1));
+                        listaNums.set(i+1,valorResultado);
+                    }
+
+                    resultadoPantalla.setText(String.valueOf(valorResultado));
+                }catch (IndexOutOfBoundsException e){
+                    System.out.println("Error: " + e);
                 }
             }
         });
@@ -147,7 +213,15 @@ public class MainActivity extends AppCompatActivity {
                 resultado = num1 * num2;
                 break;
             case "/":
-                resultado = num1 / num2;
+                if(num2 == 0){
+                    try{
+                        resultado = num1 / num2;
+                    }catch (ArithmeticException e){
+                        System.out.println(e);
+                    }
+                }else{
+                    resultado = num1 / num2;
+                }
                 break;
             case "%":
                 resultado = num1 % num2;
@@ -156,8 +230,5 @@ public class MainActivity extends AppCompatActivity {
         return resultado;
     }
 
-    public void prioridadOperaciones(){
-
-    }
 }
 
